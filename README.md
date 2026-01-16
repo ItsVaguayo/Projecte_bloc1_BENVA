@@ -1,6 +1,5 @@
 # 🧾 Projecte 1 — Sistema integral de vendes
 
-![meme](https://media.giphy.com/media/13HgwGsXF0aiGY/giphy.gif) <br>
 Resum
 -----
 Aquest repositori conté la implementació completa del Projecte 1 — Sistema integral de vendes. Hi ha quatre aplicacions en Python que simulen el flux real d’alta i gestió de clients i productes, assignació de productes amb preus per client i procés de compra amb validació de comandes. El contingut reflecteix el treball acabat i els resultats obtinguts durant la pràctica.
