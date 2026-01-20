@@ -11,50 +11,55 @@ def ft_extract():
     for i in range(len(extract1)):
         extract2.append(extract1[i].split(";"))
     return (extract2)
-
-"""
-def clientes_diccionario():
-    clients = {}
-    try:
-          for clientsdoc in range (clientsdoc):
-                linea = clientsdoc.strip()
-                if linea:
-                    nif, nom = linea.split(";")
-                    clients[nif] = nom
-    except FileNotFoundError:
-        print("No existe el fichero")
-"""
-def ft_alta_clients():
-        dni = int(input("Introduce el nif sin letra: "))
-        dni = str(dni)
+def ft_alta_clients(clientes_lista):
+        lista=clientes_lista
+        dni = input("Introduce el nif sin letra: ")
         nom = input("Introduce el nombre: ")
-        clientsdoc = open("clients.txt","a")
-        clientsdoc.write(dni+";" + nom+"\n")
-        clientsdoc.close()
+        autorizar_creacion=True
 
-def ft_listar_clients():
-    lista = ft_extract()
+        for cliente in clientes_lista:
+                if dni == cliente[0]:
+                    print("El DNI", dni,"Ya esta registrado")
+                    autorizar_creacion=False
+
+        if autorizar_creacion==True:
+                clientsdoc = open("clients.txt","a")
+                clientsdoc.write(dni+";" + nom+"\n")
+                clientsdoc.close()
+                print("El usuario",nom,"a sido agregado")
+        else:
+            print("Cancelando operacion")
+def ft_listar_clients(clientes_lista):
+    lista = clientes_lista
     try:
         for x in lista:
             #de la lista, pilla el primer caracter y le da valor a la variable
-            dni = x[0]
-            nombre = x[1]
-            print("DNI:",dni,"NOMBRE:",nombre)
+            if len(x) == 2:
+                dni = x[0]
+                nombre = x[1]
+                print("DNI:",dni,"NOMBRE:",nombre)
         return
     except FileNotFoundError:
         print("Existe un error en el fichero")
 
 
-"""def ft_borrar_clientes(clientsdoc):
-    clients = open("clients.txt", "a")
-    clients4545 = {}
-    for clientsdoc in range (clients):
-        print(clients4545)
-"""
+def ft_borrar_clientes(clientsdoc):
+    open("clients.txt","r")
+
+    clientes_acuales=clientsdoc
+
+    nif_borrar= input("Cual es el DNI del usuario a eliminar= ")
+    for x in clientes_acuales:
+        if len(x) == 2:
+            if x[0] == nif_borrar:
+                print("El DNI del usuario a eliminado es: ",x[0])
+                del ("clients.txt"[x])
+
+
 
 def ft_menu():
     while True:
-        try:
+       # try:
             texto=("""
 0- Sortir del programa
 1- Mostrar clients existents
@@ -63,20 +68,20 @@ def ft_menu():
 ____________________________""")
             print(texto)
             menu=int(input("--> "))
+            clientes_lista=ft_extract()
             if menu == 0:
                 return (menu)
             elif menu == 1:
-                ft_listar_clients()
+                ft_listar_clients(clientes_lista)
             elif menu == 2:
-                ft_alta_clients()
+                ft_alta_clients(clientes_lista)
             elif menu == 3:
-                #ft_borrar_clientes()
-                print("hola")
+                ft_borrar_clientes(clientes_lista)
             else:
                 print("Numero invalido")
-        except:
-            print("Caracter invalido")
+        #except:
+         #   print("Caracter invalido")
 
 
-ala=ft_menu()
-print(ala)
+hola=ft_menu()
+print(hola)
