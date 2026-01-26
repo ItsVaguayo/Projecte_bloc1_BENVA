@@ -1,27 +1,22 @@
-documento = "clients.txt"
-clientsdoc=   open(documento,"a")
-
-#By Victor A.
-#Esta funcion desarrollada por Victor A. crea una LISTA con los nombres y DNI de cada individuo por separado
 def ft_extract():
+    # By Victor A.
+    # Esta funcion desarrollada por Victor A. crea una LISTA con los nombres y DNI de cada individuo por separado
     clientsdoc = open("clients.txt", "r")
     clientsdoc = clientsdoc.read()
     extract1 = clientsdoc.split("\n")
     extract2 = []
     for i in range(len(extract1)):
         extract2.append(extract1[i].split(";"))
-    return (extract2)
+    return extract2
 def ft_alta_clients(clientes_lista):
-        lista=clientes_lista
-        dni = input("Introduce el nif sin letra: ")
-        nom = input("Introduce el nombre: ")
+        dni = input("Introduce el NIF/DNI: ")
+        nom = input("Introduce el Nombre: ")
         autorizar_creacion=True
 
         for cliente in clientes_lista:
                 if dni == cliente[0]:
                     print("El DNI", dni,"Ya esta registrado")
                     autorizar_creacion=False
-
         if autorizar_creacion==True:
                 clientsdoc = open("clients.txt","a")
                 clientsdoc.write(dni+";" + nom+"\n")
@@ -41,25 +36,29 @@ def ft_listar_clients(clientes_lista):
         return
     except FileNotFoundError:
         print("Existe un error en el fichero")
+def ft_borrar_clientes(clientes_lista):
+    dni_borrar = input("Cual es el DNI del usuario a borrar: ")
+    nueva_lista = []
+    encontrado = False
+    for x in clientes_lista:
+        if len(x) ==2:
+            if x[0] == dni_borrar:
+                print("El cliente con DNI", dni_borrar,"ha sido eliminado")
+                print("El usuario",x[1],"ha decido abandonar")
+                encontrado = True
+            else:
+                nueva_lista.append(x)
+    if encontrado == False:
+        print("El cliente con DNI no existe")
+        return
 
-
-def ft_borrar_clientes(clientsdoc):
-    open("clients.txt","r")
-
-    clientes_acuales=clientsdoc
-
-    nif_borrar= input("Cual es el DNI del usuario a eliminar= ")
-    for x in clientes_acuales:
-        if len(x) == 2:
-            if x[0] == nif_borrar:
-                print("El DNI del usuario a eliminado es: ",x[0])
-                del ("clients.txt"[x])
-
-
-
+    documento= open("clients.txt", "w")
+    for cliente in nueva_lista:
+            documento.write(cliente[0] + ";" + cliente[1] + "\n")
+    documento.close()
+    return
 def ft_menu():
     while True:
-       # try:
             texto=("""
 0- Sortir del programa
 1- Mostrar clients existents
@@ -67,20 +66,22 @@ def ft_menu():
 3- Esborrar client existent
 ____________________________""")
             print(texto)
-            menu=int(input("--> "))
-            clientes_lista=ft_extract()
-            if menu == 0:
-                return (menu)
-            elif menu == 1:
-                ft_listar_clients(clientes_lista)
-            elif menu == 2:
-                ft_alta_clients(clientes_lista)
-            elif menu == 3:
-                ft_borrar_clientes(clientes_lista)
-            else:
-                print("Numero invalido")
-        #except:
-         #   print("Caracter invalido")
+            try:
+                menu=int(input("--> "))
+                clientes_lista=ft_extract()
+                if menu == 0:
+                    menu=("""¡ADIOS!""")
+                    return (menu)
+                elif menu == 1:
+                    ft_listar_clients(clientes_lista)
+                elif menu == 2:
+                    ft_alta_clients(clientes_lista)
+                elif menu == 3:
+                    ft_borrar_clientes(clientes_lista)
+                else:
+                    print("Numero invalido")
+            except ValueError:
+                print("Introduzca un numero no letras")
 
 
 hola=ft_menu()

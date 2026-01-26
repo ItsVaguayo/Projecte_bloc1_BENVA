@@ -1,9 +1,9 @@
-11111111;Lenny
-22222222;Dutch Van Der Linde
-33333333;John
-44444444;Arthur Morgan
-55555555;Hosea
-66666666;O'Driscoll
-77777777;Lluvia Repentina
-88888888;Jack Maston
-
+11111111A;Lenny
+22222222B;Dutch Van Der Linde
+44444444C;Arthur Morgan
+55555555D;Hosea
+66666666E;O'Driscoll
+77777777F;Lluvia Repentina
+88888888G;Jack Marston
+33333333H;John Marston
+99999999I;Maicah Mr.Rat
