@@ -6,7 +6,7 @@
 #    By: vaguayo- <vaguayo-@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/12 16:36:29 by vaguayo-          #+#    #+#              #
-#    Updated: 2026/02/01 20:58:03 by vaguayo-         ###   ########.fr        #
+#    Updated: 2026/02/01 21:04:12 by vaguayo-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -109,20 +109,23 @@ def showCistella(cistella):
         print("\nLa teva cistella està buida...")
         return 
     
-    print("\n" + "*"*70)
-    print(f"{'CODI':<8} | {'NOM':<18} | {'QTY':<6} | {'PREU':<8} | {'TOTAL'}")
-    print("*"*70)
+    print("\n" + "*"*75)
+    print(f"{'CODI':<8} | {'NOM':<18} | {'QTY':<6} | {'PREU':<10} | {'TOTAL'}")
+    print("*"*75)
     
     total_comanda = 0
     for item in cistella:
-        subtotal = int(item[1]) * int(item[3])
+        preu_unitari = int(item[3])
+        subtotal = int(item[1]) * preu_unitari
         total_comanda += subtotal
         
-        print(f"{item[0]:<8} | {item[2]:<18} | {item[1]:<6} | {item[3]:<8} | {subtotal}")
+        preu_txt = f"{preu_unitari} €"
+        subtotal_txt = f"{subtotal} €"
         
-    print("*"*70)
+        print(f"{item[0]:<8} | {item[2]:<18} | {item[1]:<6} | {preu_txt:<10} | {subtotal_txt}")
+        
+    print("*"*75)
     print(f"TOTAL COMANDA: {total_comanda} €")
-
 def deleteProducte(cistella):
     id = input("Introdueix el codi del producte que vols eliminar de la teva cistella: \n")
     producte = ft_find_index(cistella,id)
@@ -158,17 +161,17 @@ def aplicacio_4():
     cistella = []
     
     if usuaris is None:
-        print("Error")
         return (-1)
     
     user = login(usuaris)
-    
+    if not user:
+        return
     print(f"Benvingut a l’aplicació de vendes {user[1]}")
     while (choice != 0):
         choice = menu()
         match choice:
             case 0:
-                print(f"Sortint del programa. Que tinguis un bon dia {user}!")
+                print(f"Sortint del programa. Que tinguis un bon dia {user[1]}")
             case 1:
                 cistella = addProduct(productes,cistella)
             case 2:
