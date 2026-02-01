@@ -15,6 +15,9 @@ def ft_alta_clients(clientes_lista):
                 if dni == cliente[0]:
                     print("El DNI", dni,"Ya esta registrado")
                     return
+                elif len(dni) != 9:
+                    print("El DNI", dni,"tiene un numero de valores erroneo")
+                    return
         #si pasa la verificacion pide los datos faltantes
         nom = input("Introduce el Nombre: ")
         #registra el nombre y dni del usuario pasada la verificacion
