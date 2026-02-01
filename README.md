@@ -17,8 +17,8 @@ Què s’inclou al repositori
 - alta_productes.py — Aplicació 2: gestió de productes (llegir, crear, esborrar).  
 - assignacio_productes.py — Aplicació 3: relacions client–producte amb preus.  
 - venda_client.py — Aplicació 4: login per NIF, cistell i validació de comanda.  
-- data/clients.txt — fitxer de dades de clients utilitzat en les proves.  
-- data/productes.txt — fitxer de dades de productes.  
+- clients.txt — fitxer de dades de clients utilitzat en les proves.  
+- productes.txt — fitxer de dades de productes.  
 - data/relacions.txt — relacions client;producte;preu.  
 - docs/PLA_DE_PROVES.pdf — pla de proves exportat a PDF (un full per aplicació).  
 - PLA_DE_PROVES_LINK.txt — enllaç públic al Google Sheets amb el pla de proves.  
