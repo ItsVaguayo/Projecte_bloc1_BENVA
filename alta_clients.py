@@ -64,7 +64,7 @@ ____________________________""")
             print(texto)
             try:
                 menu=int(input("--> "))
-                # Llamada a la función desde el archivo libft
+                # Llamada a la función externa desde libft
                 clientes_lista=libft.ft_extract()
                 if menu == 0:
                     menu="""¡ADIOS!"""
