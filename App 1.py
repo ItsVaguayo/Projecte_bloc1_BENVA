@@ -10,20 +10,18 @@ def ft_extract():
     return extract2
 def ft_alta_clients(clientes_lista):
         dni = input("Introduce el NIF/DNI: ")
-        nom = input("Introduce el Nombre: ")
-        autorizar_creacion=True
-
+        #Verifica si el usuario con el DNI X esta en el documento
         for cliente in clientes_lista:
                 if dni == cliente[0]:
                     print("El DNI", dni,"Ya esta registrado")
-                    autorizar_creacion=False
-        if autorizar_creacion==True:
-                clientsdoc = open("clients.txt","a")
-                clientsdoc.write(dni+";" + nom+"\n")
-                clientsdoc.close()
-                print("El usuario",nom,"a sido agregado")
-        else:
-            print("Cancelando operacion")
+                    return
+        #si pasa la verificacion pide los datos faltantes
+        nom = input("Introduce el Nombre: ")
+        #registra el nombre y dni del usuario pasada la verificacion
+        clientsdoc = open("clients.txt","a")
+        clientsdoc.write(dni+";" + nom+"\n")
+        clientsdoc.close()
+        print("El usuario",nom,"a sido agregado")
 def ft_listar_clients(clientes_lista):
     lista = clientes_lista
     try:
@@ -39,16 +37,16 @@ def ft_listar_clients(clientes_lista):
 def ft_borrar_clientes(clientes_lista):
     dni_borrar = input("Cual es el DNI del usuario a borrar: ")
     nueva_lista = []
-    encontrado = False
+    encontrado = True
     for x in clientes_lista:
         if len(x) ==2:
             if x[0] == dni_borrar:
                 print("El cliente con DNI", dni_borrar,"ha sido eliminado")
                 print("El usuario",x[1],"ha decido abandonar")
-                encontrado = True
+                encontrado = False
             else:
                 nueva_lista.append(x)
-    if encontrado == False:
+    if encontrado:
         print("El cliente con DNI no existe")
         return
 
@@ -70,8 +68,8 @@ ____________________________""")
                 menu=int(input("--> "))
                 clientes_lista=ft_extract()
                 if menu == 0:
-                    menu=("""¡ADIOS!""")
-                    return (menu)
+                    menu="""¡ADIOS!"""
+                    return menu
                 elif menu == 1:
                     ft_listar_clients(clientes_lista)
                 elif menu == 2:
@@ -84,5 +82,5 @@ ____________________________""")
                 print("Introduzca un numero no letras")
 
 
-hola=ft_menu()
-print(hola)
+main=ft_menu()
+print(main)
