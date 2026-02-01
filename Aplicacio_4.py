@@ -6,12 +6,13 @@
 #    By: vaguayo- <vaguayo-@student.42barcelona.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/12 16:36:29 by vaguayo-          #+#    #+#              #
-#    Updated: 2026/01/26 17:56:13 by vaguayo-         ###   ########.fr        #
+#    Updated: 2026/02/01 20:58:03 by vaguayo-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 import os
 import libft
+from datetime import datetime
 
 def tryRead():
     try:
@@ -26,7 +27,7 @@ def tryRead():
         return usuaris, productes
 
     except FileNotFoundError as e:
-        # e.filename guarda la infirmacio del fitxer que ha fallat, super util!!
+        # e.filename guarda la infirma # e.filename guarda la informacio del fitxer que ha fallat, super util!!
         print(f"Error: Falta el fitxer obligatori -> {e.filename}")
         return None, None
     except Exception as e:
@@ -76,41 +77,81 @@ def ft_find_index(list, to_find):
     if not list:
         return (None)
     for i in range(len(list)):
-        for x in range(len(list[i])):
-            if list[i][x] == to_find:
-                return (i)
+        if list[i][0] == to_find:
+            return (i)
     return (None)
 
 def addProduct(productes, cistell):
-    id = input("Introdueix el codi del producte que vols afegir a la teva cistella: \n")
+    id_input = input("Introdueix el codi del producte: ")
     info_productes = libft.ft_extract(productes)
-    producte = libft.ft_find(info_productes,id)
+    producte = libft.ft_find(info_productes, id_input)
     
     if not producte:
-        print("Error: No se ha trobat el producte\n")
-        return (None)
-    quantitat = int(input("Intrueix la quantitat que vols del producte: "))
-    index = ft_find_index(cistell,producte[0])
-    if index:
-        quantitat += int(cistell[index][1])
-        cistell[index][1] = str(quantitat)
+        print("Error: No s'ha trobat el producte\n")
+        return cistell
+    nom_prod = producte[2]
+    preu_prod = producte[1]
+
+    quantitat = int(input(f"Quantes unitats de '{nom_prod}' vols?: "))
+    
+    index = ft_find_index(cistell, id_input)
+    if index is not None:
+        nova_qty = int(cistell[index][1]) + quantitat
+        cistell[index][1] = str(nova_qty)
     else:
-        cistell.append([id,quantitat,producte[1],producte[2]])
+        cistell.append([id_input, str(quantitat), nom_prod, preu_prod])
+    
     showCistella(cistell)
-    return(cistell)
+    return cistell
     
 def showCistella(cistella):
     if not cistella:
-        print("La teva cistella esta buida...\n")
+        print("\nLa teva cistella està buida...")
         return 
-    print("\n***********************************")
-    print("* CISTELL                   *")
-    print("***********************************")
-    print("*  Codi  *  Quantitat  *  Preu  *  Total  *")
-    print("\n***********************************")
-    for i in range(len(cistella)):
-        print(f"*  {cistella[i][0]}  *  {cistella[i][1]}  *  {cistella[i][2]}  *  {(int(cistella[i][1]) * int(cistella[i][2]))}  *")
-        print("\n***********************************")
+    
+    print("\n" + "*"*70)
+    print(f"{'CODI':<8} | {'NOM':<18} | {'QTY':<6} | {'PREU':<8} | {'TOTAL'}")
+    print("*"*70)
+    
+    total_comanda = 0
+    for item in cistella:
+        subtotal = int(item[1]) * int(item[3])
+        total_comanda += subtotal
+        
+        print(f"{item[0]:<8} | {item[2]:<18} | {item[1]:<6} | {item[3]:<8} | {subtotal}")
+        
+    print("*"*70)
+    print(f"TOTAL COMANDA: {total_comanda} €")
+
+def deleteProducte(cistella):
+    id = input("Introdueix el codi del producte que vols eliminar de la teva cistella: \n")
+    producte = ft_find_index(cistella,id)
+    
+    if producte is None:
+        print("Error: No se ha trobat el producte\n")
+        return (cistella)
+    del cistella[producte]
+    showCistella(cistella)
+    return cistella
+    
+def validarComanda(user_nif, cistella):
+    if not cistella:
+        print("No pots validar una comanda buida.")
+        return False
+    
+    data_avui = datetime.today().strftime('%Y%m%d')
+    nom_fitxer = f"{user_nif}{data_avui}.txt"
+    
+    try:
+        with open(nom_fitxer, 'w') as f:
+            for item in cistella:
+                f.write(f"{item[0]};{item[1]};{item[3]}\n")
+        print(f"Comanda validada correctament! Guardada a: {nom_fitxer}")
+        return True
+    except Exception as e:
+        print(f"Error al desar la comanda: {e}")
+        return False
+
 def aplicacio_4():
     usuaris, productes = tryRead()
     choice = 1
@@ -130,5 +171,11 @@ def aplicacio_4():
                 print(f"Sortint del programa. Que tinguis un bon dia {user}!")
             case 1:
                 cistella = addProduct(productes,cistella)
-
+            case 2:
+                deleteProducte(cistella)
+            case 3:
+                showCistella(cistella)
+            case 4:
+                if validarComanda(user[0], cistella):
+                    cistella = []
 aplicacio_4()
