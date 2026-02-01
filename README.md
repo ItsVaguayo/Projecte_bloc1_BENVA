@@ -80,6 +80,7 @@ Limitacions i observacions
 
 Enllaç al pla de proves (Google Sheets)
 ---------------------------------------
-El link públic es troba a `PLA_DE_PROVES_LINK.txt` a l’arrel del repositori. També hi ha una còpia exportada a PDF a `docs/PLA_DE_PROVES.pdf`.
+El link públic també s’inclou a `PLA_DE_PROVES_LINK.txt` a l’arrel del repositori i, per comoditat, es proporciona directament aquí:
+[Pla de proves (Google Sheets)](https://docs.google.com/spreadsheets/d/14ddSe5LJVh81456p6RumQDzvTiB8s1yY/edit?usp=sharing&ouid=113939765937429954159&rtpof=true&sd=true)
 
-```
+També hi ha una còpia exportada a PDF a `docs/PLA_DE_PROVES.pdf`.
